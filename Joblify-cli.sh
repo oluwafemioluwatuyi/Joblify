@@ -531,7 +531,7 @@ generate_module() {
   echo -e "  ${BOLD}── Core Architecture (always generated) ─────────────${NC}"
   create_repository_interface "$module_name" "$service_name"
   create_repository           "$module_name" "$service_name"
-  create_service      s        "$module_name" "$service_name"
+  create_service          "$module_name" "$service_name"
   echo ""
 
   # ── Optional ───────────────────────────────────────────────────────────────

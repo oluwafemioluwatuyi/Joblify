@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using Joblify.Data;
+using Joblify.Infrastructure.Data;
 using Joblify.Modules.Users.Entities;
 
 namespace Joblify.Modules.Users.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly AppDbContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public UserRepository(AppDbContext context)
+    public UserRepository(ApplicationDbContext context)
     {
         _context = context;
     }
