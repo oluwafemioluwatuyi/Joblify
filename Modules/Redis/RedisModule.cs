@@ -3,6 +3,7 @@ using Joblify.Modules.Redis.Configurations;
 using Joblify.Modules.Redis.Services;
 using Joblify.Modules.Redis.Interfaces;
 using static Joblify.Infrastructure.Extensions.ModuleExtensions;
+using StackExchange.Redis;
 
 namespace Joblify.Modules.Redis;
 
@@ -53,6 +54,31 @@ public class RedisModule : IModule
             opts.Configuration = rc.ConnectionString;
             opts.InstanceName = rc.InstancePrefix;
         });
+
+        // Register IConnectionMultiplexer (required by RedisService and RedisStartupService)
+        services.AddSingleton<IConnectionMultiplexer>(sp =>
+        {
+            var rc = sp.GetRequiredService<IOptions<RedisConfiguration>>().Value;
+
+            var configOptions = new ConfigurationOptions
+            {
+                Password = rc.Password,
+                Ssl = rc.Ssl,
+                ConnectTimeout = rc.ConnectTimeout,
+                SyncTimeout = rc.SyncTimeout,
+                KeepAlive = rc.KeepAlive,
+                AbortOnConnectFail = false, // Let startup service handle failures gracefully
+            };
+
+            foreach (var endpoint in rc.ConnectionString.Split(','))
+                configOptions.EndPoints.Add(endpoint.Trim());
+
+            return ConnectionMultiplexer.Connect(configOptions);
+        });
+
+        // Uncomment this now
+        services.AddHostedService<RedisStartupService>();
+        services.AddScoped<IRedisStartupService, RedisStartupService>();
 
         services.AddScoped<IRedisService, RedisService>();
         //services.AddScoped<IRedisStartupService, RedisStartupService>();
