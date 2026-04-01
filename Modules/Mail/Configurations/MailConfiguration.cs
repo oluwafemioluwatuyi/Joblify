@@ -1,4 +1,4 @@
-namespace Joblify.Modules.Mails.Configurations;
+namespace Joblify.Modules.Mail.Configurations;
 
 public class MailConfiguration
 {

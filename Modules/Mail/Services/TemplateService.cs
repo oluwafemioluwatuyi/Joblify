@@ -1,7 +1,7 @@
-using Joblify.Modules.Mails.Interfaces;
+using Joblify.Modules.Mail.Interfaces;
 using RazorLight;
 
-namespace Joblify.Modules.Mails.Services;
+namespace Joblify.Modules.Mail.Services;
 
 public class MailTemplateService : IMailTemplateService
 {
@@ -11,10 +11,10 @@ public class MailTemplateService : IMailTemplateService
     public MailTemplateService(IRazorLightEngine razorEngine)
     {
         _razorEngine = razorEngine;
-        _templatesPath = Path.Combine(Directory.GetCurrentDirectory(), "Modules", "Mails", "Templates");
+        _templatesPath = Path.Combine(Directory.GetCurrentDirectory(), "Modules", "Mail", "Templates");
     }
 
-    public async Task<string> RenderAsync(string templateName, Dictionary<string, string> model)
+    public async Task<string> RenderAsync(string templateName, Dictionary<string, object> model)
     {
         if (!await TemplateExistsAsync(templateName))
             throw new FileNotFoundException($"Mail template '{templateName}' was not found in {_templatesPath}");

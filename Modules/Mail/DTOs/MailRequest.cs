@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Joblify.Modules.Mails.DTOs;
+namespace Joblify.Modules.Mail.DTOs;
 
 public class MailRequest
 {
@@ -17,9 +17,9 @@ public class MailRequest
 
     public string? HtmlContent { get; set; }
 
-    public List<string> CcEmails { get; set; } = new();
+    public List<string> CcEMail { get; set; } = new();
 
-    public List<string> BccEmails { get; set; } = new();
+    public List<string> BccEMail { get; set; } = new();
 
     public Dictionary<string, byte[]> Attachments { get; set; } = new();
 }
@@ -29,5 +29,5 @@ public class TemplateMailRequest : MailRequest
     [Required]
     public string TemplateName { get; set; } = string.Empty;
 
-    public Dictionary<string, object> TemplateData { get; set; } = new();
+    public Dictionary<string, object> TemplateModel { get; set; } = new();
 }

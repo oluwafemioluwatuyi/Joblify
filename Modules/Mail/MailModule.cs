@@ -1,10 +1,10 @@
-using Joblify.Modules.Mails.Services;
-using Joblify.Modules.Mails.Interfaces;
+using Joblify.Modules.Mail.Services;
+using Joblify.Modules.Mail.Interfaces;
 using RazorLight;
 using static Joblify.Infrastructure.Extensions.ModuleExtensions;
-using Joblify.Modules.Mails.Configurations;
+using Joblify.Modules.Mail.Configurations;
 
-namespace Joblify.Modules.Mails;
+namespace Joblify.Modules.Mail;
 
 public class MailModule : IModule
 {
@@ -19,13 +19,13 @@ public class MailModule : IModule
         services.AddScoped<IRazorLightEngine>(_ =>
             new RazorLightEngineBuilder()
                 .UseFileSystemProject(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Modules", "Mails", "Templates"))
+                    Path.Combine(Directory.GetCurrentDirectory(), "Modules", "Mail", "Templates"))
                 .UseMemoryCachingProvider()
                 .Build()
         );
 
         services.AddScoped<IMailTemplateService, MailTemplateService>();
-        services.AddScoped<IMailService, MailService>();
+        services.AddScoped<IMailervice, Mailervice>();
 
         return services;
     }
